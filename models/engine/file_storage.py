@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-"""This is a module that defines a class that manages file storage for hbnb clone"""
+"""Module defining a class that manages file storage for hbnb clone"""
 import json
 
 
 class FileStorage:
-    """Class managing the storage of hbnb models in JSON format"""
+    """Class that manages the storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
 
     def all(self, cls=None):
-        """A dictionary of models currently in storage is returned"""
+        """Returns a dictionary of models currently in storage"""
         if cls is None:
             return self.__objects
         cls_name = cls.__name__
@@ -20,13 +20,13 @@ class FileStorage:
         return dct
 
     def new(self, obj):
-        """A new object is added to storage dictionary"""
+        """Adds a new object to storage dictionary"""
         self.__objects.update(
             {obj.to_dict()['__class__'] + '.' + obj.id: obj}
             )
 
     def save(self):
-        """Storage dictionary is saved to file"""
+        """Saves storage dictionary to file"""
         with open(self.__file_path, 'w') as f:
             temp = {}
             temp.update(self.__objects)
@@ -35,7 +35,7 @@ class FileStorage:
             json.dump(temp, f)
 
     def reload(self):
-        """Storage dictionary is loaded from file"""
+        """Loads storage dictionary from file"""
         from models.base_model import BaseModel
         from models.user import User
         from models.place import Place
@@ -59,7 +59,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        ''' The object obj is deleted from the attribute
+        '''Deletes the object obj from the attribute
             __objects if present
         '''
         if obj is None:
@@ -69,5 +69,5 @@ class FileStorage:
             del self.__objects[obj_key]
 
     def close(self):
-        """The reload method is called"""
+        """Calls the reload method"""
         self.reload()
